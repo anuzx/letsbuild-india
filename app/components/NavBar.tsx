@@ -3,6 +3,14 @@
 import Link from 'next/link';
 
 export default function NavBar() {
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div style={{
       width: '100%',
@@ -47,40 +55,43 @@ export default function NavBar() {
 
           {/* Navigation Links */}
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            {['Hackathon', 'About Us', 'Contact Us'].map((label, i) => {
-              const hrefs = ['/hackathon', '/about', '/contact'];
-              return (
-                <Link
-                  key={label}
-                  href={hrefs[i]}
-                  style={{
-                    padding: '0.5rem 1.1rem',
-                    background: 'rgba(255, 255, 255, 0.08)',
-                    borderRadius: '0.6rem',
-                    fontSize: '0.875rem',
-                    fontWeight: '600',
-                    color: 'rgba(255, 255, 255, 0.85)',
-                    textDecoration: 'none',
-                    transition: 'all 0.2s',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.18)';
-                    e.currentTarget.style.color = '#ffffff';
-                    e.currentTarget.style.transform = 'translateY(-1px)';
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.85)';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-                  }}
-                >
-                  {label}
-                </Link>
-              );
-            })}
+            {[
+              { label: 'Hackathon', id: 'hackathons' },
+              { label: 'About Us', id: 'home' },
+              { label: 'Contact Us', id: 'contact' },
+            ].map(({ label, id }) => (
+              <a
+                key={label}
+                href={`#${id}`}
+                onClick={(e) => handleScroll(e, id)}
+                style={{
+                  padding: '0.5rem 1.1rem',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  borderRadius: '0.6rem',
+                  fontSize: '0.875rem',
+                  fontWeight: '600',
+                  color: 'rgba(255, 255, 255, 0.85)',
+                  textDecoration: 'none',
+                  transition: 'all 0.2s',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  cursor: 'pointer',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.18)';
+                  e.currentTarget.style.color = '#ffffff';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                  e.currentTarget.style.color = 'rgba(255, 255, 255, 0.85)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                }}
+              >
+                {label}
+              </a>
+            ))}
           </div>
         </div>
       </nav>
