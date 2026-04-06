@@ -1,278 +1,250 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import Card from "./Card";
 
 const hackathons = [
   {
     title: "MongoDB Essentials",
-    image: "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
-    price: "FREE",
-    mode: "VIRTUAL",
-    deadline: "Sun Apr 19 2026",
-    link: "https://vision.hack2skill.com/event/mongodb-essentials/",
-  },
-  {
-    title: "MongoDB Essentials",
-    image: "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
-    price: "FREE",
-    mode: "VIRTUAL",
-    deadline: "Sun Apr 19 2026",
-    link: "https://vision.hack2skill.com/event/mongodb-essentials/",
-  },
-  {
-    title: "MongoDB Essentials",
-    image: "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
-    price: "FREE",
-    mode: "VIRTUAL",
-    deadline: "Sun Apr 19 2026",
-    link: "https://vision.hack2skill.com/event/mongodb-essentials/",
-  },
-  {
-    title: "MongoDB Essentials",
-    image: "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
+    image:
+      "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
     price: "FREE",
     mode: "VIRTUAL",
     deadline: "Sun Apr 19 2026",
     link: "https://vision.hack2skill.com/event/mongodb-essentials/",
   }, {
     title: "MongoDB Essentials",
-    image: "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
+    image:
+      "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
     price: "FREE",
     mode: "VIRTUAL",
     deadline: "Sun Apr 19 2026",
     link: "https://vision.hack2skill.com/event/mongodb-essentials/",
   }, {
     title: "MongoDB Essentials",
-    image: "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
+    image:
+      "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
     price: "FREE",
     mode: "VIRTUAL",
     deadline: "Sun Apr 19 2026",
     link: "https://vision.hack2skill.com/event/mongodb-essentials/",
   }, {
     title: "MongoDB Essentials",
-    image: "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
+    image:
+      "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
     price: "FREE",
     mode: "VIRTUAL",
     deadline: "Sun Apr 19 2026",
     link: "https://vision.hack2skill.com/event/mongodb-essentials/",
   }, {
     title: "MongoDB Essentials",
-    image: "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
+    image:
+      "https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000008/1774606378436-H2SWebinarBanner.webp",
     price: "FREE",
     mode: "VIRTUAL",
     deadline: "Sun Apr 19 2026",
     link: "https://vision.hack2skill.com/event/mongodb-essentials/",
   },
+  // keep rest same...
 ];
 
 export default function HackathonSection() {
-  const scrollRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const leftBtnRef = useRef<HTMLButtonElement>(null);
   const rightBtnRef = useRef<HTMLButtonElement>(null);
 
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const vantaRef = useRef<HTMLDivElement>(null);
+  const vantaEffect = useRef<any>(null);
 
-  // Entrance animations
+  const autoTween = useRef<gsap.core.Tween | null>(null);
+
+  // 🎬 GSAP entrance
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         headingRef.current,
         { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", delay: 0.1 }
+        { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }
       );
 
       gsap.fromTo(
         ".hackathon-card",
-        { opacity: 0, y: 60, scale: 0.95 },
+        { opacity: 0, y: 60 },
         {
-          opacity: 1, y: 0, scale: 1,
-          duration: 0.7, ease: "power3.out",
-          stagger: 0.12, delay: 0.3,
+          opacity: 1,
+          y: 0,
+          stagger: 0.12,
+          duration: 0.7,
+          ease: "power3.out",
+          delay: 0.2,
         }
-      );
-
-      gsap.fromTo(
-        [leftBtnRef.current, rightBtnRef.current],
-        { opacity: 0, scale: 0.8 },
-        { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)", delay: 0.6 }
       );
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
+  console.log("Vanta mounted", vantaRef.current);
+  // 🌫️ VANTA
+  useEffect(() => {
+    let effect: any;
 
-  // Track scroll position for arrow visibility
-  const updateScrollState = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 10);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
-  };
+    const init = async () => {
+      const THREE = await import("three");
+      const TRUNK = (await import("vanta/dist/vanta.trunk.min")).default;
 
+      if (vantaRef.current) {
+        effect = TRUNK({
+          el: vantaRef.current,
+          THREE: THREE, // ✅ IMPORTANT
+
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+
+          minHeight: 200,
+          minWidth: 200,
+
+          scale: 1,
+          scaleMobile: 1,
+
+          // 🔥 make it visible
+          color: 0x6b7280,          // grey branches
+          backgroundColor: 0x0a0a0f, // match your dark theme
+          spacing: 6,               // VERY IMPORTANT (0.5 was too dense)
+        });
+
+        vantaEffect.current = effect;
+      }
+    };
+
+    init();
+
+    return () => {
+      if (vantaEffect.current) {
+        vantaEffect.current.destroy();
+        vantaEffect.current = null;
+      }
+    };
+  }, []);
+
+  // 🔁 AUTO SCROLL
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    el.addEventListener("scroll", updateScrollState);
-    updateScrollState();
-    return () => el.removeEventListener("scroll", updateScrollState);
+
+    const totalWidth = el.scrollWidth / 2;
+
+    autoTween.current = gsap.to(el, {
+      scrollLeft: totalWidth,
+      duration: 25,
+      ease: "none",
+      repeat: -1,
+    });
+
+    return () => {
+      autoTween.current?.kill();
+    };
   }, []);
 
-  // GSAP-powered smooth scroll
-  const scroll = (direction: "left" | "right") => {
+  // ⬅️➡️ Manual scroll
+  const scroll = (dir: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    const target = { value: el.scrollLeft };
-    const newScroll = direction === "left"
-      ? el.scrollLeft - 320
-      : el.scrollLeft + 320;
 
-    gsap.to(target, {
-      value: newScroll,
-      duration: 0.65,
+    autoTween.current?.pause();
+
+    const amount = dir === "left" ? -320 : 320;
+
+    gsap.to(el, {
+      scrollLeft: el.scrollLeft + amount,
+      duration: 0.6,
       ease: "power3.inOut",
-      onUpdate: () => { el.scrollLeft = target.value; },
+      onComplete: () => autoTween.current?.resume() as any,
     });
   };
 
-  // Button hover via GSAP
-  const handleBtnHover = (btn: HTMLButtonElement | null, enter: boolean) => {
+  const handleHover = (btn: HTMLButtonElement | null, enter: boolean) => {
     if (!btn) return;
-    gsap.to(btn, {
-      scale: enter ? 1.12 : 1,
-      duration: 0.25,
-      ease: "power2.out",
-    });
+    gsap.to(btn, { scale: enter ? 1.1 : 1, duration: 0.2 });
   };
 
   return (
     <section
       ref={sectionRef}
-      id="hackathon"
-      className="w-full py-24 overflow-hidden"
-      style={{ background: "linear-gradient(180deg, #0a0a0f 0%, #0f0f1a 100%)" }}
+      className="relative w-full py-24 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-8">
+      {/* 🌫️ Vanta */}
+      <div
+        ref={vantaRef}
+        className="absolute top-0 left-0 w-full h-full -z-10"
+      />
 
-        {/* Heading */}
-        <div ref={headingRef} className="flex flex-col items-center mb-16" style={{ opacity: 0 }}>
-          <p
-            className="text-xs font-semibold tracking-[0.3em] uppercase mb-3"
-            style={{ color: "rgba(255,255,255,0.35)" }}
-          >
+      <div className="max-w-7xl mx-auto px-8">
+        {/* 🔥 Heading */}
+        <div
+          ref={headingRef}
+          className="flex flex-col items-center mb-16"
+          style={{ opacity: 0 }}
+        >
+          <p className="text-xs tracking-[0.3em] uppercase text-white/40 mb-3">
             Upcoming Events
           </p>
-          <h2
-            className="text-4xl md:text-5xl font-bold text-center"
-            style={{ color: "#ffffff", letterSpacing: "-0.03em" }}
-          >
+
+          <h2 className="text-4xl md:text-5xl font-bold text-white">
             Hackathons
           </h2>
-          <div
-            className="mt-4 h-[2px] w-16 rounded-full"
-            style={{ background: "rgba(255,255,255,0.2)" }}
-          />
+
+          <div className="mt-4 h-[2px] w-16 bg-white/20 rounded-full" />
         </div>
+      </div>
 
-        {/* Scroll area */}
-        <div className="relative">
+      {/* 🚀 FULL WIDTH SCROLLER */}
+      <div className="relative w-screen left-1/2 -translate-x-1/2">
+        {/* Fade edges */}
+        <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none bg-gradient-to-r from-[#0a0a0f] to-transparent" />
+        <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none bg-gradient-to-l from-[#0a0a0f] to-transparent" />
 
-          {/* Left fade edge */}
-          <div
-            className="absolute left-0 top-0 h-full w-20 z-10 pointer-events-none"
-            style={{
-              background: "linear-gradient(to right, #0a0a0f, transparent)",
-              opacity: canScrollLeft ? 1 : 0,
-              transition: "opacity 0.4s ease",
-            }}
-          />
+        {/* Arrows */}
+        <button
+          ref={leftBtnRef}
+          onClick={() => scroll("left")}
+          onMouseEnter={() => handleHover(leftBtnRef.current, true)}
+          onMouseLeave={() => handleHover(leftBtnRef.current, false)}
+          className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur"
+        >
+          ‹
+        </button>
 
-          {/* Right fade edge */}
-          <div
-            className="absolute right-0 top-0 h-full w-20 z-10 pointer-events-none"
-            style={{
-              background: "linear-gradient(to left, #0f0f1a, transparent)",
-              opacity: canScrollRight ? 1 : 0,
-              transition: "opacity 0.4s ease",
-            }}
-          />
+        <button
+          ref={rightBtnRef}
+          onClick={() => scroll("right")}
+          onMouseEnter={() => handleHover(rightBtnRef.current, true)}
+          onMouseLeave={() => handleHover(rightBtnRef.current, false)}
+          className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur"
+        >
+          ›
+        </button>
 
-          {/* Left Arrow */}
-          <button
-            ref={leftBtnRef}
-            onClick={() => scroll("left")}
-            onMouseEnter={() => handleBtnHover(leftBtnRef.current, true)}
-            onMouseLeave={() => handleBtnHover(leftBtnRef.current, false)}
-            className="absolute -left-5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full"
-            style={{
-              background: "rgba(255,255,255,0.07)",
-              border: "1px solid rgba(255,255,255,0.14)",
-              color: "rgba(255,255,255,0.85)",
-              cursor: "pointer",
-              backdropFilter: "blur(10px)",
-              fontSize: "1.4rem",
-              lineHeight: 1,
-              opacity: canScrollLeft ? 1 : 0.15,
-              transition: "opacity 0.3s ease",
-              pointerEvents: canScrollLeft ? "auto" : "none",
-            }}
-          >
-            ‹
-          </button>
-
-          {/* Right Arrow */}
-          <button
-            ref={rightBtnRef}
-            onClick={() => scroll("right")}
-            onMouseEnter={() => handleBtnHover(rightBtnRef.current, true)}
-            onMouseLeave={() => handleBtnHover(rightBtnRef.current, false)}
-            className="absolute -right-5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full"
-            style={{
-              background: "rgba(255,255,255,0.07)",
-              border: "1px solid rgba(255,255,255,0.14)",
-              color: "rgba(255,255,255,0.85)",
-              cursor: "pointer",
-              backdropFilter: "blur(10px)",
-              fontSize: "1.4rem",
-              lineHeight: 1,
-              opacity: canScrollRight ? 1 : 0.15,
-              transition: "opacity 0.3s ease",
-              pointerEvents: canScrollRight ? "auto" : "none",
-            }}
-          >
-            ›
-          </button>
-
-          {/* Cards row */}
-          <div
-            ref={scrollRef}
-            className="flex gap-6 overflow-x-auto pt-4 pb-8 px-2"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            <style>{`#hackathon-scroll::-webkit-scrollbar { display: none; }`}</style>
-            {hackathons.map((h, i) => (
-              <div
-                key={i}
-                className="hackathon-card flex-shrink-0 w-64"
-                style={{ opacity: 0 }}
-              >
-                <Card
-                  title={h.title}
-                  image={h.image}
-                  price={h.price}
-                  mode={h.mode}
-                  deadline={h.deadline}
-                  link={h.link}
-                />
-              </div>
-            ))}
-          </div>
+        {/* Cards */}
+        <div
+          ref={scrollRef}
+          className="flex gap-6 overflow-hidden py-10 px-8"
+          onMouseEnter={() => autoTween.current?.pause()}
+          onMouseLeave={() => autoTween.current?.resume()}
+        >
+          {[...hackathons, ...hackathons].map((h, i) => (
+            <div
+              key={i}
+              className="hackathon-card flex-shrink-0 w-64"
+            >
+              <Card {...h} />
+            </div>
+          ))}
         </div>
-
       </div>
     </section>
   );

@@ -1,8 +1,8 @@
 import HeroSection from "./components/HeroSection";
 import HackathonSection from "./components/Hackathon";
-import { SponserSection } from "./components/SponserSection";
+import SponserSection from "./components/SponserSection";
 import { ContactUs } from "./components/ContactUs";
-import { Footer } from "./components/Footer";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
@@ -37,7 +37,7 @@ export default function Home() {
               Sponsors
             </h2>
             <div
-              className="mt-4 h-[2px] w-16 rounded-full"
+              className="mt-4 h-0.5 w-16 rounded-full"
               style={{ background: "rgba(255,255,255,0.2)" }}
             />
           </div>
@@ -66,7 +66,7 @@ export default function Home() {
               Contact Us
             </h2>
             <div
-              className="mt-4 h-[2px] w-16 rounded-full"
+              className="mt-4 h-0.5 w-16 rounded-full"
               style={{ background: "rgba(255,255,255,0.2)" }}
             />
           </div>

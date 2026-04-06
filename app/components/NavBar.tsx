@@ -42,7 +42,7 @@ export default function NavBar() {
             onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'}
             onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
           >
-            HT
+            LBI
           </Link>
 
           {/* Navigation Links */}
