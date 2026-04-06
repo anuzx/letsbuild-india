@@ -16,7 +16,7 @@ export const ContactUs = (props: {}) => {
     "font-mono text-[0.65rem] uppercase tracking-[0.1em] text-[#737373] mb-6";
 
   return (
-    <div>
+    <div className="text-[#f0f0f0]">
       <div className={titleClass}>contact</div>
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <PrimaryInput

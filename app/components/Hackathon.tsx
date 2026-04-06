@@ -51,7 +51,6 @@ const hackathons = [
 
 export default function HackathonSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const leftBtnRef = useRef<HTMLButtonElement>(null);
@@ -65,12 +64,6 @@ export default function HackathonSection() {
   // 🎬 GSAP entrance
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        headingRef.current,
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }
-      );
-
       gsap.fromTo(
         ".hackathon-card",
         { opacity: 0, y: 60 },
@@ -93,31 +86,30 @@ export default function HackathonSection() {
     let effect: any;
 
     const init = async () => {
-      const THREE = await import("three");
-      const TRUNK = (await import("vanta/dist/vanta.trunk.min")).default;
+      try {
+        const THREE = await import("three");
+        (window as any).THREE = THREE;
+        const TRUNK = (await import("vanta/dist/vanta.trunk.min")).default;
 
-      if (vantaRef.current) {
-        effect = TRUNK({
-          el: vantaRef.current,
-          THREE: THREE, // ✅ IMPORTANT
-
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-
-          minHeight: 200,
-          minWidth: 200,
-
-          scale: 1,
-          scaleMobile: 1,
-
-          // 🔥 make it visible
-          color: 0x6b7280,          // grey branches
-          backgroundColor: 0x0a0a0f, // match your dark theme
-          spacing: 6,               // VERY IMPORTANT (0.5 was too dense)
-        });
-
-        vantaEffect.current = effect;
+        if (vantaRef.current && typeof TRUNK === "function") {
+          effect = TRUNK({
+            el: vantaRef.current,
+            THREE: THREE,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200,
+            minWidth: 200,
+            scale: 1,
+            scaleMobile: 1,
+            color: 0x6b7280,
+            backgroundColor: 0x050505,
+            spacing: 6,
+          });
+          vantaEffect.current = effect;
+        }
+      } catch (err) {
+        console.error("Vanta initialization failed:", err);
       }
     };
 
@@ -173,9 +165,9 @@ export default function HackathonSection() {
   };
 
   return (
-    <section
+    <div
       ref={sectionRef}
-      className="relative w-full py-24 overflow-hidden"
+      className="relative w-full pb-24 overflow-hidden"
     >
       {/* 🌫️ Vanta */}
       <div
@@ -183,30 +175,13 @@ export default function HackathonSection() {
         className="absolute top-0 left-0 w-full h-full -z-10"
       />
 
-      <div className="max-w-7xl mx-auto px-8">
-        {/* 🔥 Heading */}
-        <div
-          ref={headingRef}
-          className="flex flex-col items-center mb-16"
-          style={{ opacity: 0 }}
-        >
-          <p className="text-xs tracking-[0.3em] uppercase text-white/40 mb-3">
-            Upcoming Events
-          </p>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-white">
-            Hackathons
-          </h2>
-
-          <div className="mt-4 h-[2px] w-16 bg-white/20 rounded-full" />
-        </div>
-      </div>
 
       {/* 🚀 FULL WIDTH SCROLLER */}
       <div className="relative w-screen left-1/2 -translate-x-1/2">
         {/* Fade edges */}
-        <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none bg-gradient-to-r from-[#0a0a0f] to-transparent" />
-        <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none bg-gradient-to-l from-[#0a0a0f] to-transparent" />
+        <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none bg-gradient-to-r from-[#050505] to-transparent" />
+        <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none bg-gradient-to-l from-[#050505] to-transparent" />
 
         {/* Arrows */}
         <button
@@ -246,6 +221,6 @@ export default function HackathonSection() {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
