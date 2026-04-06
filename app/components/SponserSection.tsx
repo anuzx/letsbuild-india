@@ -16,25 +16,26 @@ const TickerCard: React.FC = () => {
       shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] 
       group 
       /* Dark Theme Hover Enhancements */
-      hover:border-red-500/50 
+      hover:border-white/20
       hover:bg-[#1c1c1c]/60 
-      hover:shadow-[0_0_25px_rgba(220,38,38,0.15),inset_0_0_15px_rgba(220,38,38,0.05)]
+      hover:shadow-[0_0_25px_rgba(180,180,180,0.10),inset_0_0_15px_rgba(180,180,180,0.04)]
       transition-all duration-500 ease-out
       transform -skew-x-12 mx-3 lg:mx-4 cursor-pointer
     ">
       <div className="skew-x-12 flex flex-col items-center pointer-events-none">
         <span className="
           text-white/10 
-          group-hover:text-white/80 
+          group-hover:text-white/60
           font-mono text-xs md:text-sm 
           tracking-[0.3em] uppercase font-bold 
           transition-all duration-500 
           drop-shadow-md
           group-hover:tracking-[0.35em]
+          group-hover:[text-shadow:0_0_12px_rgba(200,200,200,0.4)]
         ">
           Coming Soon
         </span>
-        
+
         {/* Animated Accent Bar */}
         <div className="
           relative w-4 h-0.5 mt-2 
@@ -43,7 +44,7 @@ const TickerCard: React.FC = () => {
         ">
           <div className="
             absolute inset-0 
-            bg-red-600 
+            bg-white/40
             translate-x-[-100%] 
             group-hover:translate-x-[0%] 
             transition-transform duration-500 ease-in-out
@@ -65,7 +66,7 @@ const SponserSection: React.FC = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center overflow-x-hidden">
       <div className="w-full space-y-6 md:space-y-10 flex flex-col relative overflow-hidden py-8">
-        
+
         {/* Cinematic Gradient Masks */}
         <div className="absolute top-0 left-0 w-24 md:w-64 h-full bg-gradient-to-r from-[#050505] to-transparent z-20 pointer-events-none"></div>
         <div className="absolute top-0 right-0 w-24 md:w-64 h-full bg-gradient-to-l from-[#050505] to-transparent z-20 pointer-events-none"></div>
@@ -95,7 +96,8 @@ const SponserSection: React.FC = () => {
         </div>
 
         {/* Optimized Scroll Animations */}
-        <style dangerouslySetInnerHTML={{ __html: `
+        <style dangerouslySetInnerHTML={{
+          __html: `
           @keyframes scroll-left {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -117,7 +119,7 @@ const SponserSection: React.FC = () => {
       {/* Footer Branding */}
       <div className="mt-8 text-center space-y-4 group cursor-default">
         <h2 className="text-white/20 group-hover:text-white/60 font-mono tracking-[0.4em] uppercase text-[10px] md:text-xs transition-all duration-700">
-          Global Championship Series
+          LETS BUILD INDIA
         </h2>
         <div className="h-px w-8 bg-red-600/30 group-hover:w-24 group-hover:bg-red-600 mx-auto transition-all duration-700"></div>
       </div>
